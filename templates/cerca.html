@@ -1,0 +1,80 @@
+<!-- cerca.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricerca Fatture</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ricerca Fatture per Numero Lotto</h1>
+    
+    <form action="/cerca" method="get">
+        <label for="numero_cercato">Numero Lotto:</label>
+        <input type="text" id="numero_cercato" name="numero_cercato" required>
+        <button type="submit">Cerca</button>
+    </form>
+
+    {% if risultato_ricerca %}
+        <h2>Risultato della Ricerca</h2>
+        <ul>
+            {% for risultato in risultato_ricerca %}
+                <li>Fattura: {{ risultato.numero_fattura }}, Lotto: {{ risultato.numero_lotto }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nessun risultato trovato.</p>
+    {% endif %}
+</body>
+</html>

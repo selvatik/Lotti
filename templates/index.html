@@ -1,0 +1,122 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Associazioni Fatture e Lotti</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Associazioni Fatture e Lotti</h1>
+    
+    <form action="/associa" method="post">
+        <label for="numero_fattura">Numero Fattura:</label>
+        <input type="text" id="numero_fattura" name="numero_fattura" required>
+
+        <label for="numero_lotto">Numero Lotto:</label>
+        <input type="text" id="numero_lotto" name="numero_lotto" required>
+
+        <button type="submit">Associa Fattura e Lotto</button>
+    </form>
+
+    <button id="toggleAssociazioni" onclick="toggleAssociazioni()">Mostra Associazioni Correnti</button>
+
+    <h2>Associazioni Correnti</h2>
+    
+    <table id="associazioniTable" class="hidden">
+        <tr>
+            <th>Numero Fattura</th>
+            <th>Numeri Lotti Associati</th>
+        </tr>
+        {% for numero_fattura, numeri_lotti in dati.items() %}
+            <tr>
+                <td>{{ numero_fattura }}</td>
+                <td>{{ numeri_lotti }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Ricerca Fatture per Numero Lotto</h2>
+    
+    <form action="/cerca" method="get">
+        <label for="numero_cercato">Numero Lotto:</label>
+        <input type="text" id="numero_cercato" name="numero_cercato" required>
+        <button type="submit">Cerca</button>
+    </form>
+
+    <h2>Risultato Ricerca</h2>
+    
+    {% if numero_cercato and numero_lotto %}
+        <p>Numero Lotto: {{ numero_cercato }}</p>
+        <p>Fatture Associate: {{ numero_lotto }}</p>
+    {% else %}
+        <p>Nessun risultato di ricerca.</p>
+    {% endif %}
+
+    <script>
+        function toggleAssociazioni() {
+            var table = document.getElementById("associazioniTable");
+            table.classList.toggle("hidden");
+        }
+    </script>
+</body>
+</html>
